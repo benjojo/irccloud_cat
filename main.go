@@ -48,9 +48,9 @@ func main() {
 		if wat.URL != "" && wat.Type == "oob_include" {
 			h, e = http.NewRequest("GET", "https://www.irccloud.com"+wat.URL, nil)
 			h.Header.Add("Cookie", fmt.Sprintf("session=%s", lines[0]))
-			tresp, e := client.Do(h)
+			tresp, _ := client.Do(h)
 			ioutil.ReadAll(tresp.Body)
-
+			fmt.Fprintf(os.Stderr, "Did the OOB include, the stream should work ~forever~ now.")
 		}
 		if err != nil {
 			panic(err)
