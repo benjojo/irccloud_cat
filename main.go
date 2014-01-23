@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -9,6 +10,12 @@ import (
 	"os"
 	"strings"
 )
+
+type MessageDump struct {
+	Bid  int    `json:"bid"`
+	Type string `json:"type"`
+	URL  string `json:"url"`
+}
 
 func main() {
 	fmt.Fprintf(os.Stderr, "IRCCloud Streamer")
@@ -36,6 +43,15 @@ func main() {
 	reader := bufio.NewReader(resp.Body)
 	for {
 		s, err := reader.ReadString('\n')
+		wat := MessageDump{}
+		json.Unmarshal([]byte(s), &wat)
+		if wat.URL != "" && wat.Type == "oob_include" {
+			h, e = http.NewRequest("GET", "https://www.irccloud.com"+wat.URL, nil)
+			h.Header.Add("Cookie", fmt.Sprintf("session=%s", lines[0]))
+			tresp, e := client.Do(h)
+			ioutil.ReadAll(tresp.Body)
+
+		}
 		if err != nil {
 			panic(err)
 		}
