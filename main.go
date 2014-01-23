@@ -13,7 +13,9 @@ func main() {
 	if e != nil {
 		panic(e)
 	}
-	resp, e := http.Client.Do(*h)
+	client := &http.Client{}
+
+	resp, e := client.Do(h)
 	if e != nil {
 		panic(e)
 	}
