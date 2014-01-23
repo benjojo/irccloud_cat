@@ -13,12 +13,15 @@ func main() {
 	if e != nil {
 		panic(e)
 	}
-
+	resp, e := http.Client.Do(*h)
+	if e != nil {
+		panic(e)
+	}
 	h.Header.Add("Cookie", "session=asdfasdfasd")
 
 	reader := bufio.NewReader(resp.Body)
 	for {
-		s, err := reader.ReadString("\n")
+		s, err := reader.ReadString('\n')
 		if err != nil {
 			panic(err)
 		}
