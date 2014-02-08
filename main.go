@@ -62,7 +62,12 @@ func main() {
 	if e != nil {
 		panic(e)
 	}
-
+	if FileLogging {
+		f, err := os.OpenFile("./log", os.O_APPEND|os.O_WRONLY, 0600)
+		if err != nil {
+			panic("cannot open the log file.")
+		}
+	}
 	reader := bufio.NewReader(resp.Body)
 	for {
 		s, err := reader.ReadString('\n')
@@ -79,5 +84,6 @@ func main() {
 			panic(err)
 		}
 		fmt.Printf("%s", s)
+
 	}
 }
