@@ -17,7 +17,10 @@ type MessageDump struct {
 	URL  string `json:"url"`
 }
 
+var FileLogging bool
+
 func main() {
+	FileLogging = true
 	fmt.Fprintf(os.Stderr, "IRCCloud Streamer")
 	streamtoken := ""
 	if len(os.Args) == 2 {
