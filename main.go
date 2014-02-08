@@ -17,6 +17,21 @@ type MessageDump struct {
 	URL  string `json:"url"`
 }
 
+type Msg struct {
+	Bid         float64 `json:"bid"`
+	Chan        string  `json:"chan"`
+	Cid         float64 `json:"cid"`
+	Eid         float64 `json:"eid"`
+	From        string  `json:"from"`
+	FromHost    string  `json:"from_host"`
+	FromMode    string  `json:"from_mode"`
+	FromName    string  `json:"from_name"`
+	Hostmask    string  `json:"hostmask"`
+	IdentPrefix string  `json:"ident_prefix"`
+	Msg         string  `json:"msg"`
+	Type        string  `json:"type"`
+}
+
 var FileLogging bool
 
 func main() {
