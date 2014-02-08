@@ -62,6 +62,7 @@ func main() {
 	if e != nil {
 		panic(e)
 	}
+	var f *os.File
 	if FileLogging {
 		f, err := os.OpenFile("./log", os.O_APPEND|os.O_WRONLY, 0600)
 		if err != nil {
@@ -84,6 +85,8 @@ func main() {
 			panic(err)
 		}
 		fmt.Printf("%s", s)
-
+		if FileLogging {
+			f.WriteString(s)
+		}
 	}
 }
