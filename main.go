@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -33,11 +34,12 @@ type Msg struct {
 	Type        string  `json:"type"`
 }
 
-var FileLogging bool
+var FileLogging *bool
 var RetryCount int
 
 func main() {
-	FileLogging = true
+	FileLogging = flag.Bool("filelogging", false, "true to enable logging to ./log")
+	flag.Parse()
 	fmt.Fprintf(os.Stderr, "IRCCloud Streamer")
 	streamtoken := ""
 	if len(os.Args) == 2 {
@@ -65,7 +67,7 @@ func main() {
 		panic(e)
 	}
 	var f *os.File
-	if FileLogging {
+	if *FileLogging {
 		var err error
 		f, err = os.OpenFile("./log", os.O_APPEND|os.O_WRONLY, 0600)
 		if err != nil {
@@ -95,7 +97,7 @@ func main() {
 
 		}
 		fmt.Printf("%s", s)
-		if FileLogging {
+		if *FileLogging {
 			f.WriteString(s)
 		}
 	}
