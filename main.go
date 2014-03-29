@@ -84,6 +84,7 @@ func main() {
 			fmt.Fprintf(os.Stderr, "Did the OOB include, the stream should work ~forever~ now.")
 		}
 		if err != nil {
+			time.Sleep(time.Second * 5)
 			RetryCount++
 			if RetryCount > 5 {
 				panic(err)
