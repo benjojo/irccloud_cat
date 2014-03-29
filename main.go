@@ -66,7 +66,8 @@ func main() {
 	}
 	var f *os.File
 	if FileLogging {
-		f, err := os.OpenFile("./log", os.O_APPEND|os.O_WRONLY, 0600)
+		var err error
+		f, err = os.OpenFile("./log", os.O_APPEND|os.O_WRONLY, 0600)
 		if err != nil {
 			panic("cannot open the log file.")
 		}
