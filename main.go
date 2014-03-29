@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"time"
 )
 
 type MessageDump struct {
@@ -33,6 +34,7 @@ type Msg struct {
 }
 
 var FileLogging bool
+var RetryCount int
 
 func main() {
 	FileLogging = true
@@ -82,7 +84,13 @@ func main() {
 			fmt.Fprintf(os.Stderr, "Did the OOB include, the stream should work ~forever~ now.")
 		}
 		if err != nil {
-			panic(err)
+			RetryCount++
+			if RetryCount > 5 {
+				panic(err)
+			}
+
+			main()
+
 		}
 		fmt.Printf("%s", s)
 		if FileLogging {
